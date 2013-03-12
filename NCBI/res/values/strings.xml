@@ -2,7 +2,16 @@
 <resources>
 
     <string name="app_name">NCBI</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="title_network_error">Network error</string>
+    <string name="message_network_error">Network error</string>
+
+    <string-array name="databases">
+        <item>PubMed</item>
+        <item>Protein</item>
+        <item>Nucleotide</item>
+        <item>Genome</item>
+    </string-array>
 
 </resources>

@@ -1,22 +1,32 @@
 package gov.nih.nlm.ncbi;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-public class MainActivity extends Activity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(R.style.Theme_Sherlock_Light);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-	}
+		
+		getSupportActionBar().setLogo(R.drawable.logo_ncbi);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+		FragmentManager manager = getSupportFragmentManager();
+		FragmentTransaction transaction = manager.beginTransaction();
 
+		Fragment fragment = manager.findFragmentByTag("fragment");
+		if (fragment == null) {
+			fragment = new MenuFragment();
+			transaction.add(fragment, "fragment");
+		}
+		transaction.commit();
+	}
 }
