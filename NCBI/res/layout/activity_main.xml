@@ -16,7 +16,8 @@
             android:layout_width="70dip"
             android:layout_height="fill_parent"
             android:layout_gravity="left"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:entries="@array/databases" />
 
         <EditText
             android:id="@+id/EditTextTerm"
