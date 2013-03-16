@@ -12,10 +12,10 @@ import android.widget.Button;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		OnClickListener 
+		OnClickListener
 {
 	private Handler handler = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.Theme_Sherlock_Light);
@@ -35,7 +35,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			transaction.add(fragment, "fragment");
 		}
 		transaction.commit();
-		
+
 		handler = new Handler();
 
 		Button button = (Button) findViewById(R.id.ButtonFetch);
@@ -44,7 +44,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE);
 	}
 
 	public synchronized Handler getHandler() {
