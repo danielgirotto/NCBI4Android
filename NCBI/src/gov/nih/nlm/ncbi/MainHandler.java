@@ -8,11 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.markupartist.android.widget.PullToRefreshListView;
+
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 
 	private MainActivity context = null;
+	private static String TAG = "MainHandler";
 
 	public MainHandler(MainActivity context) {
 		this.context = context;
@@ -35,21 +39,29 @@ public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 				summaryList.add(summary);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.d(TAG, "IOException " + e.getMessage());
+			return null;
 		}
 		return summaryList;
 	}
 
 	@Override
-	protected void onPostExecute(List<Summary> result) {
+	protected void onPostExecute(final List<Summary> result) {
 		super.onPostExecute(result);
+
+		if (result == null) {
+			return;
+		}
 
 		context.getHandler().post(new Runnable() {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+				context.getAdapter().add(result);
+				context.getListView().setAdapter(context.getAdapter());
+
+				((PullToRefreshListView) context.getListView())
+						.onRefreshComplete();
 			}
 		});
 	}
