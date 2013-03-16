@@ -1,6 +1,6 @@
 package gov.nih.nlm.ncbi.core;
 
-import gov.nih.nlm.ncbi.persistence.Summary;
+import gov.nih.nlm.ncbi.model.Summary;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class ESummary {
 
-	private String title = new String();
+	private String data = new String();
 
 	public Summary summary(String db, String id) throws IOException {
 		String spec = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
@@ -37,7 +37,7 @@ public class ESummary {
 			conn.disconnect();
 			parse(response.toString());
 		}
-		return new Summary(Long.parseLong(id), title, "");
+		return new Summary(Long.parseLong(id), data);
 	}
 
 	private void parse(String source) {
@@ -45,7 +45,7 @@ public class ESummary {
 		Matcher matcher = pattern.matcher(source);
 
 		while (matcher.find()) {
-			title = matcher.group().replaceAll("<[^>]+>", "");
+			data = matcher.group().replaceAll("<[^>]+>", "");
 		}
 	}
 }
