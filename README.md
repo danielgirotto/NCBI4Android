@@ -1,12 +1,17 @@
-NCBI4Android
+## NCBI4Android - NCBI Android Client
 ============
+The [National Center for Biotechnology Information] (http://www.ncbi.nlm.nih.gov/) advances science and health by providing access to biomedical and genomic information.
 
-Developed By
+### Databases
+- PubMed
+- Protein
+- Nucleotide
+- Genome
+
+## Developed By
 ============
 
 * Daniel Girotto - <danielcgirotto@gmail.com>
-
-
 
 License
 =======
@@ -26,7 +31,7 @@ License
     limitations under the License.
 
 
-Dependencies
+## Dependencies
 ============
 * [android-pulltorefresh] (https://github.com/danielgirotto/android-pulltorefresh) - <https://github.com/danielgirotto/android-pulltorefresh>
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) - <https://github.com/JakeWharton/ActionBarSherlock>
