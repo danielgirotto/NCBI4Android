@@ -12,6 +12,6 @@
         android:id="@+id/TextViewContent"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
 
 </ScrollView>
