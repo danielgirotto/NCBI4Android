@@ -10,13 +10,18 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.util.Log;
+
 public class ESummary {
 
 	private String data = new String();
 
+	private static final String TAG = "ESummary";
+
 	public Summary summary(String db, String id) throws IOException {
 		String spec = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
 				+ "eutils/esummary.fcgi?db=%s&id=%s&version=2.0", db, id);
+		Log.d(TAG, spec);
 
 		URL url = null;
 		HttpURLConnection conn = null;

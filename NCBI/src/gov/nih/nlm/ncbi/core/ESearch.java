@@ -10,17 +10,22 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.util.Log;
+
 public class ESearch {
 
 	private String count = new String();
 	private List<String> idList = new ArrayList<String>();
 
+	private static final String TAG = "ESearch";
+
 	public List<String> search(String db, String term, String start, String max)
-			throws IOException 
+			throws IOException
 	{
 		String spec = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
 				+ "eutils/esearch.fcgi?db=%s&term=%s&retstart=%s&retmax=%s",
 				db, term, start, max);
+		Log.d(TAG, spec);
 
 		URL url = null;
 		HttpURLConnection conn = null;

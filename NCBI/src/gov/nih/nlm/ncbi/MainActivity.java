@@ -1,5 +1,8 @@
 package gov.nih.nlm.ncbi;
 
+import java.util.Locale;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.markupartist.android.widget.PullToRefreshListView;
@@ -75,13 +77,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onClick(View v) {
+		adapter.clear();
 		listView.setAdapter(null);
 		findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE);
 
 		Spinner spinner = (Spinner) findViewById(R.id.SpinnerDatabase);
 		EditText editText = (EditText) findViewById(R.id.EditTextTerm);
 
-		db = spinner.getSelectedItem().toString();
+		Locale locale = Locale.getDefault();
+		db = spinner.getSelectedItem().toString().toLowerCase(locale);
 		term = editText.getText().toString();
 
 		new MainHandler(this).execute(db, term, "0", "5");
@@ -90,7 +94,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-		Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+		Bundle extras = new Bundle();
+		extras.putString("id", String.valueOf(id));
+		extras.putString("db", db);
+		extras.putString("mode", "text");
+		extras.putString("type", "abstract");
+
+		Intent intent = new Intent(this, ContentActivity.class);
+		intent.putExtras(extras);
+		startActivity(intent);
 	}
 
 	public synchronized ListView getListView() {
