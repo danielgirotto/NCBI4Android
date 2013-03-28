@@ -2,6 +2,9 @@ package gov.nih.nlm.ncbi;
 
 import java.util.Locale;
 
+import org.holoeverywhere.widget.EditText;
+import org.holoeverywhere.widget.Spinner;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,9 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.markupartist.android.widget.PullToRefreshListView;
@@ -34,7 +35,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.Theme_Sherlock_Light);
+		//setTheme(R.style.Theme_Sherlock_Light);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
