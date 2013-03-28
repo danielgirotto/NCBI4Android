@@ -13,6 +13,16 @@ The [National Center for Biotechnology Information] (http://www.ncbi.nlm.nih.gov
 
 * Daniel Girotto - <danielcgirotto@gmail.com>
 
+## How to use?
+
+* You should clone git repo, init and update submodules:
+
+```
+git clone git@github.com:danielgirotto/NCBI4Android.git NCBI4Android
+cd NCBI4Android
+git submodule update --init --recursive
+```
+
 License
 =======
 
@@ -29,10 +39,4 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-
-## Dependencies
-============
-* [android-pulltorefresh] (https://github.com/danielgirotto/android-pulltorefresh) - <https://github.com/danielgirotto/android-pulltorefresh>
-* [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) - <https://github.com/JakeWharton/ActionBarSherlock>
 
