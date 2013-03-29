@@ -2,13 +2,11 @@ package gov.nih.nlm.ncbi.core;
 
 import gov.nih.nlm.ncbi.model.Summary;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import android.util.Log;
 
@@ -19,38 +17,27 @@ public class ESummary {
 	private static final String TAG = "ESummary";
 
 	public Summary summary(String db, String id) throws IOException {
-		String spec = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
+		String url = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
 				+ "eutils/esummary.fcgi?db=%s&id=%s&version=2.0", db, id);
-		Log.d(TAG, spec);
+		Log.d(TAG, url);
 
-		URL url = null;
-		HttpURLConnection conn = null;
-		StringBuilder response = new StringBuilder();
-
+		Document document = null;
 		try {
-			url = new URL(spec);
-			conn = (HttpURLConnection) url.openConnection();
-
-			InputStreamReader in = new InputStreamReader(conn.getInputStream());
-			BufferedReader bufferedReader = new BufferedReader(in, 30000);
-
-			String line = new String();
-			while ((line = bufferedReader.readLine()) != null) {
-				response.append(line);
-			}
+			document = Jsoup.connect(url)
+					.data("query", "Java")
+					.userAgent("Mozilla")
+					.cookie("auth", "token")
+					.timeout(3000)
+					.get();
 		} finally {
-			conn.disconnect();
-			parse(response.toString());
+			Elements elements = null;
+			if ((elements = document.select("Title")).size() > 0) {
+				data = elements.text();
+				return new Summary(Long.parseLong(id), data);
+			}
+			elements = document.select("DefLine");
+			data = elements.text();
 		}
 		return new Summary(Long.parseLong(id), data);
-	}
-
-	private void parse(String source) {
-		Pattern pattern = Pattern.compile("<(Title|Defline)>[^<]+");
-		Matcher matcher = pattern.matcher(source);
-
-		while (matcher.find()) {
-			data = matcher.group().replaceAll("<[^>]+>", "");
-		}
 	}
 }
