@@ -19,12 +19,12 @@ public class ESearch {
 
 	private static final String TAG = "ESearch";
 
-	public List<String> search(String db, String term, String start, String max)
+	public List<String> search(String db, String term, String start)
 			throws IOException
 	{
 		String spec = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
 				+ "eutils/esearch.fcgi?db=%s&term=%s&retstart=%s&retmax=%s",
-				db, term, start, max);
+				db, term, start, 5);
 		Log.d(TAG, spec);
 
 		URL url = null;

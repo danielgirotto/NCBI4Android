@@ -24,7 +24,7 @@ public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 
 	@Override
 	protected List<Summary> doInBackground(String... params) {
-		String db = params[0], term = params[1], start = params[2], max = params[3];
+		String db = params[0], term = params[1], start = params[2];
 
 		List<Summary> summaryList = new ArrayList<Summary>();
 
@@ -32,7 +32,7 @@ public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 		ESummary eSummary = new ESummary();
 
 		try {
-			List<String> idList = eSearch.search(db, term, start, max);
+			List<String> idList = eSearch.search(db, term, start);
 
 			for (String id : idList) {
 				Summary summary = eSummary.summary(db, id);

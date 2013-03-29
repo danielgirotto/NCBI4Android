@@ -30,7 +30,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	private ListView listView = null;
 	private CustomAdapter adapter = null;
 
-	private int start = 0;
+	private int index = 0;
 	private String db = null;
 	private String term = null;
 
@@ -68,9 +68,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 		{
 			@Override
 			public void onRefresh() {
-				start += 5;
-				new MainHandler(MainActivity.this).execute(db, term,
-						String.valueOf(start), "5");
+				index += 5;
+				String start = String.valueOf(index);
+				new MainHandler(MainActivity.this).execute(db, term, start);
 			}
 		});
 
@@ -91,8 +91,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		db = spinner.getSelectedItem().toString().toLowerCase(locale);
 		term = editText.getText().toString();
 
-		new MainHandler(this).execute(db, term, "0", "5");
-		start = 0;
+		new MainHandler(this).execute(db, term, "0");
+		index = 0;
 	}
 
 	@Override
