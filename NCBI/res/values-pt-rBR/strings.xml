@@ -12,7 +12,6 @@
         <item>Genome</item>
     </string-array>
 
-    <string name="app_name">pulltorefresh</string>
     <string name="pull_to_refresh_pull_label">Puxe para atualizar&#8230;</string>
     <string name="pull_to_refresh_release_label">Solte para atualizar&#8230;</string>
     <string name="pull_to_refresh_refreshing_label">Carregando&#8230;</string>
