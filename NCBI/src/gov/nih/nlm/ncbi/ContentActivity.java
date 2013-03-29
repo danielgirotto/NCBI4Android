@@ -1,5 +1,6 @@
 package gov.nih.nlm.ncbi;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,15 +17,16 @@ public class ContentActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.Theme_Sherlock_Light);
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_content);
+
+		Drawable drawable = getResources().getDrawable(R.color.holo_blue_ncbi);
 
 		getSupportActionBar().setLogo(R.drawable.logo_ncbi);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setBackgroundDrawable(drawable);
 
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction transaction = manager.beginTransaction();

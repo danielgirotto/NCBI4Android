@@ -2,10 +2,10 @@ package gov.nih.nlm.ncbi;
 
 import java.util.Locale;
 
-import org.holoeverywhere.widget.EditText;
 import org.holoeverywhere.widget.Spinner;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -35,13 +36,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//setTheme(R.style.Theme_Sherlock_Light);
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		Drawable drawable = getResources().getDrawable(R.color.holo_blue_ncbi);
+
 		getSupportActionBar().setLogo(R.drawable.logo_ncbi);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setBackgroundDrawable(drawable);
 
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction transaction = manager.beginTransaction();
