@@ -39,7 +39,9 @@ public class ContentActivity extends SherlockFragmentActivity {
 		transaction.commit();
 
 		this.handler = new Handler();
-		this.webView = (WebView) findViewById(R.id.TextViewContent);
+		this.webView = (WebView) findViewById(R.id.WebViewContent);
+		this.webView.getSettings().setSupportZoom(true);
+		this.webView.getSettings().setBuiltInZoomControls(true);
 
 		Bundle params = getIntent().getExtras();
 
