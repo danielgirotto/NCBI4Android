@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -38,10 +39,11 @@ public class ContentActivity extends SherlockFragmentActivity {
 		}
 		transaction.commit();
 
-		this.handler = new Handler();
-		this.webView = (WebView) findViewById(R.id.WebViewContent);
-		this.webView.getSettings().setSupportZoom(true);
-		this.webView.getSettings().setBuiltInZoomControls(true);
+		handler = new Handler();
+		webView = (WebView) findViewById(R.id.WebViewContent);
+		webView.getSettings().setSupportZoom(true);
+		webView.getSettings().setBuiltInZoomControls(true);
+		webView.setWebChromeClient(new WebChromeClient());
 
 		Bundle params = getIntent().getExtras();
 
