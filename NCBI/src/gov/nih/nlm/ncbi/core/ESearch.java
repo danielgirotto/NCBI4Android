@@ -20,26 +20,28 @@ public class ESearch {
 
 	public List<String> search(String db, String term, String start)
 			throws IOException
+
 	{
 		String url = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
 				+ "eutils/esearch.fcgi?db=%s&term=%s&retstart=%s&retmax=%s",
 				db, term, start, 5);
 		Log.d(TAG, url);
 
-		Document document = null;
+		Document document = Jsoup.connect(url)
+				.data("query", "Java")
+				.userAgent("Mozilla")
+				.cookie("auth", "token")
+				.timeout(5000)
+				.get();
+
 		try {
-			document = Jsoup.connect(url)
-					.data("query", "Java")
-					.userAgent("Mozilla")
-					.cookie("auth", "token")
-					.timeout(3000)
-					.get();
-		} finally {
 			Elements elements = document.select("Id");
 			for (Element element : elements) {
 				idList.add(element.text());
 			}
 			count = document.select("Count").text();
+		} catch (NullPointerException e) {
+			return null;
 		}
 		return idList;
 	}

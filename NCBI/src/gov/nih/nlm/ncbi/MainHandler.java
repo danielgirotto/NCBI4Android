@@ -34,9 +34,15 @@ public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 		try {
 			List<String> idList = eSearch.search(db, term, start);
 
+			if (idList == null) {
+				throw new IOException();
+			}
+
 			for (String id : idList) {
 				Summary summary = eSummary.summary(db, id);
-				summaryList.add(summary);
+				if (summary != null) {
+					summaryList.add(summary);
+				}
 			}
 		} catch (IOException e) {
 			Log.d(TAG, "IOException " + e.getMessage());

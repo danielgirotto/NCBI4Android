@@ -21,15 +21,14 @@ public class ESummary {
 				+ "eutils/esummary.fcgi?db=%s&id=%s&version=2.0", db, id);
 		Log.d(TAG, url);
 
-		Document document = null;
+		Document document = Jsoup.connect(url)
+				.data("query", "Java")
+				.userAgent("Mozilla")
+				.cookie("auth", "token")
+				.timeout(5000)
+				.get();
+
 		try {
-			document = Jsoup.connect(url)
-					.data("query", "Java")
-					.userAgent("Mozilla")
-					.cookie("auth", "token")
-					.timeout(3000)
-					.get();
-		} finally {
 			Elements elements = null;
 			if ((elements = document.select("Title")).size() > 0) {
 				data = elements.text();
@@ -37,6 +36,8 @@ public class ESummary {
 			}
 			elements = document.select("DefLine");
 			data = elements.text();
+		} catch (NullPointerException e) {
+			return null;
 		}
 		return new Summary(Long.parseLong(id), data);
 	}
