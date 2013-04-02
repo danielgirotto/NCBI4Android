@@ -39,7 +39,7 @@ public class ESearch {
 			for (Element element : elements) {
 				idList.add(element.text());
 			}
-			count = document.select("Count").text();
+			count = document.select("Count").first().text();
 		} catch (NullPointerException e) {
 			return null;
 		}
