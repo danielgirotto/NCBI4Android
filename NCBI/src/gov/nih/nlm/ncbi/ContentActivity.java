@@ -13,50 +13,50 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class ContentActivity extends SherlockFragmentActivity {
 
-	private Handler handler = null;
-	private WebView webView = null;
+    private Handler handler = null;
+    private WebView webView = null;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_content);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_content);
 
-		Drawable drawable = getResources().getDrawable(R.color.holo_blue_ncbi);
+        Drawable drawable = getResources().getDrawable(R.color.holo_blue_ncbi);
 
-		getSupportActionBar().setLogo(R.drawable.logo_ncbi);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setBackgroundDrawable(drawable);
+        getSupportActionBar().setLogo(R.drawable.logo_ncbi);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setBackgroundDrawable(drawable);
 
-		FragmentManager manager = getSupportFragmentManager();
-		FragmentTransaction transaction = manager.beginTransaction();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
 
-		Fragment fragment = manager.findFragmentByTag("fragment");
-		if (fragment == null) {
-			fragment = new MenuFragment();
-			transaction.add(fragment, "fragment");
-		}
-		transaction.commit();
+        Fragment fragment = manager.findFragmentByTag("fragment");
+        if (fragment == null) {
+            fragment = new MenuFragment();
+            transaction.add(fragment, "fragment");
+        }
+        transaction.commit();
 
-		handler = new Handler();
-		webView = (WebView) findViewById(R.id.WebViewContent);
-		webView.getSettings().setSupportZoom(true);
-		webView.getSettings().setBuiltInZoomControls(true);
-		webView.setWebChromeClient(new WebChromeClient());
+        handler = new Handler();
+        webView = (WebView) findViewById(R.id.WebViewContent);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.setWebChromeClient(new WebChromeClient());
 
-		Bundle params = getIntent().getExtras();
+        Bundle params = getIntent().getExtras();
 
-		new ContentHandler(this).execute(params.getString("db"),
-				params.getString("id"), params.getString("mode"),
-				params.getString("type"));
-	}
+        new ContentHandler(this).execute(params.getString("db"),
+                params.getString("id"), params.getString("mode"),
+                params.getString("type"));
+    }
 
-	public synchronized WebView getWebView() {
-		return this.webView;
-	}
+    public synchronized WebView getWebView() {
+        return this.webView;
+    }
 
-	public synchronized Handler getHandler() {
-		return this.handler;
-	}
+    public synchronized Handler getHandler() {
+        return this.handler;
+    }
 }

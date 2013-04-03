@@ -15,60 +15,60 @@ import android.util.Log;
 
 public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 
-	private MainActivity context = null;
-	private static String TAG = "MainHandler";
+    private MainActivity context = null;
+    private static String TAG = "MainHandler";
 
-	public MainHandler(MainActivity context) {
-		this.context = context;
-	}
+    public MainHandler(MainActivity context) {
+        this.context = context;
+    }
 
-	@Override
-	protected List<Summary> doInBackground(String... params) {
-		String db = params[0], term = params[1], start = params[2];
+    @Override
+    protected List<Summary> doInBackground(String... params) {
+        String db = params[0], term = params[1], start = params[2];
 
-		List<Summary> summaryList = new ArrayList<Summary>();
+        List<Summary> summaryList = new ArrayList<Summary>();
 
-		ESearch eSearch = new ESearch();
-		ESummary eSummary = new ESummary();
+        ESearch eSearch = new ESearch();
+        ESummary eSummary = new ESummary();
 
-		try {
-			List<String> idList = eSearch.search(db, term, start);
+        try {
+            List<String> idList = eSearch.search(db, term, start);
 
-			if (idList == null) {
-				throw new IOException();
-			}
+            if (idList == null) {
+                throw new IOException();
+            }
 
-			for (String id : idList) {
-				Summary summary = eSummary.summary(db, id);
-				if (summary != null) {
-					summaryList.add(summary);
-				}
-			}
-		} catch (IOException e) {
-			Log.d(TAG, "IOException " + e.getMessage());
-			return null;
-		}
-		return summaryList;
-	}
+            for (String id : idList) {
+                Summary summary = eSummary.summary(db, id);
+                if (summary != null) {
+                    summaryList.add(summary);
+                }
+            }
+        } catch (IOException e) {
+            Log.d(TAG, "IOException " + e.getMessage());
+            return null;
+        }
+        return summaryList;
+    }
 
-	@Override
-	protected void onPostExecute(final List<Summary> result) {
-		super.onPostExecute(result);
+    @Override
+    protected void onPostExecute(final List<Summary> result) {
+        super.onPostExecute(result);
 
-		if (result == null) {
-			return;
-		}
+        if (result == null) {
+            return;
+        }
 
-		context.getHandler().post(new Runnable() {
+        context.getHandler().post(new Runnable() {
 
-			@Override
-			public void run() {
-				context.getAdapter().add(result);
-				context.getListView().setAdapter(context.getAdapter());
+            @Override
+            public void run() {
+                context.getAdapter().add(result);
+                context.getListView().setAdapter(context.getAdapter());
 
-				((PullToRefreshListView) context.getListView())
-						.onRefreshComplete();
-			}
-		});
-	}
+                ((PullToRefreshListView) context.getListView())
+                        .onRefreshComplete();
+            }
+        });
+    }
 }
