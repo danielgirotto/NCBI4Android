@@ -101,8 +101,14 @@ public class MainActivity extends SherlockFragmentActivity implements
         Bundle extras = new Bundle();
         extras.putString("id", String.valueOf(id));
         extras.putString("db", db);
-        extras.putString("mode", "text");
-        extras.putString("type", "abstract");
+
+        if (db.equals("pubmed")) {
+            extras.putString("mode", "xml");
+            extras.putString("type", "abstract");
+        } else {
+            extras.putString("mode", "text");
+            extras.putString("type", "gp");
+        }
 
         Intent intent = new Intent(this, ContentActivity.class);
         intent.putExtras(extras);
