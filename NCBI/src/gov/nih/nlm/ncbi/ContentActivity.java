@@ -46,10 +46,8 @@ public class ContentActivity extends SherlockFragmentActivity {
         webView.setWebChromeClient(new WebChromeClient());
 
         Bundle params = getIntent().getExtras();
-
         new ContentHandler(this).execute(params.getString("db"),
-                params.getString("id"), params.getString("mode"),
-                params.getString("type"));
+                params.getString("id"));
     }
 
     public synchronized WebView getWebView() {
