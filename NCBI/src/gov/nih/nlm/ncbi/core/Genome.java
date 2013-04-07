@@ -18,7 +18,8 @@ public class Genome {
 
         StringBuilder response = new StringBuilder();
 
-        Document document = Jsoup.connect(url).data("query", "Java")
+        Document document = Jsoup.connect(url)
+                .data("query", "Java")
                 .userAgent("Mozilla")
                 .cookie("auth", "token")
                 .timeout(8000)
@@ -53,7 +54,8 @@ public class Genome {
                 .attr("id", "content")
                 .appendElement("div")
                 .prepend("<h3 style='color:#985735;'>Abstract</h3>")
-                .appendElement("p").text(content.ownText() + more);
+                .appendElement("p")
+                .text(content.ownText() + more);
 
         response.append(content.select("div#content"));
 
