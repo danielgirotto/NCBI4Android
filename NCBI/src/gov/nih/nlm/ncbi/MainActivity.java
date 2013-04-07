@@ -11,22 +11,25 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.markupartist.android.widget.PullToRefreshListView;
 import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
 
 public class MainActivity extends SherlockFragmentActivity implements
-        OnClickListener, OnItemClickListener
+        OnItemClickListener, OnEditorActionListener
 {
     private Handler handler = null;
+    private EditText editText = null;
     private ListView listView = null;
     private CustomAdapter adapter = null;
 
@@ -70,30 +73,33 @@ public class MainActivity extends SherlockFragmentActivity implements
             public void onRefresh() {
                 index += 5;
                 String start = String.valueOf(index);
-                new MainHandler(MainActivity.this).execute(db, term,
-                        start);
+                new MainHandler(MainActivity.this).execute(db, term, start);
             }
         });
 
-        Button button = (Button) findViewById(R.id.ButtonFetch);
-        button.setOnClickListener(this);
+        editText = (EditText) findViewById(R.id.EditTextTerm);
+        editText.setOnEditorActionListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-        adapter.clear();
-        listView.setAdapter(null);
-        findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE);
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            adapter.clear();
+            listView.setAdapter(null);
+            findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE);
 
-        Spinner spinner = (Spinner) findViewById(R.id.SpinnerDatabase);
-        EditText editText = (EditText) findViewById(R.id.EditTextTerm);
+            Spinner spinner = (Spinner) findViewById(R.id.SpinnerDatabase);
 
-        Locale locale = Locale.getDefault();
-        db = spinner.getSelectedItem().toString().toLowerCase(locale);
-        term = editText.getText().toString();
+            Locale locale = Locale.getDefault();
+            db = spinner.getSelectedItem().toString().toLowerCase(locale);
+            term = editText.getText().toString();
 
-        new MainHandler(this).execute(db, term, "0");
-        index = 0;
+            new MainHandler(this).execute(db, term, "0");
+            index = 0;
+
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -101,14 +107,6 @@ public class MainActivity extends SherlockFragmentActivity implements
         Bundle extras = new Bundle();
         extras.putString("id", String.valueOf(id));
         extras.putString("db", db);
-
-        if (db.equals("pubmed")) {
-            extras.putString("mode", "xml");
-            extras.putString("type", "abstract");
-        } else {
-            extras.putString("mode", "text");
-            extras.putString("type", "gp");
-        }
 
         Intent intent = new Intent(this, ContentActivity.class);
         intent.putExtras(extras);
