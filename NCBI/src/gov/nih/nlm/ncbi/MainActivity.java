@@ -86,7 +86,8 @@ public class MainActivity extends SherlockFragmentActivity implements
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             adapter.clear();
             listView.setAdapter(null);
-            findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE);
+            findViewById(R.id.TextViewLoad).setVisibility(View.VISIBLE);
+            findViewById(R.id.ProgressBarLoad).setVisibility(View.VISIBLE);
 
             Spinner spinner = (Spinner) findViewById(R.id.SpinnerDatabase);
 
