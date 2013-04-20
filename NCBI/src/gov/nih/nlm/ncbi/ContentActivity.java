@@ -1,13 +1,14 @@
 package gov.nih.nlm.ncbi;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -43,7 +44,23 @@ public class ContentActivity extends SherlockFragmentActivity {
         webView = (WebView) findViewById(R.id.WebViewContent);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (!url.contains("pubmed")) {
+                    return false;
+                }
+
+                String id = url.substring(url.indexOf("/"));
+
+                Intent intent = new Intent(ContentActivity.this,
+                        ContentActivity.class);
+                intent.putExtra("db", "pubmed");
+                intent.putExtra("id", id);
+
+                startActivity(intent);
+                return true;
+            }
+        });
 
         Bundle params = getIntent().getExtras();
         new ContentHandler(this).execute(params.getString("db"),

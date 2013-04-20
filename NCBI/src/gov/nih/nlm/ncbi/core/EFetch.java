@@ -37,8 +37,7 @@ public class EFetch {
             String line = new String();
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.contains("PUBMED")) {
-                    line = line.substring(0, 12)
-                            + "<a href='http://www.ncbi.nlm.nih.gov/pubmed/"
+                    line = line.substring(0, 12) + "<a href='pubmed/"
                             + line.substring(12, line.length()) + "'>"
                             + line.substring(12, line.length()) + "</a>";
                 }
