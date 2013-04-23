@@ -5,12 +5,14 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import android.util.Log;
 
 public class Genome {
 
     private static final String TAG = "Genome";
+    private static final String BASE = "http://www.ncbi.nlm.nih.gov";
 
     public String fetch(String id) throws IOException {
         String url = String.format("http://www.ncbi.nlm.nih.gov/genome/%s", id);
@@ -41,6 +43,16 @@ public class Genome {
 
         response.append(summary.select("div"));
 
+        Element lineage = document.select(".GenomeLineage").first();
+        for (Element link : lineage.select("a")) {
+            link.attr("href", BASE + link.attr("href"));
+            link.attr("style", "text-decoration: none;");
+        }
+        lineage.attr("style", "font-size: 9pt; font-weight:bold;"
+                + "font-family: arial; text-align:justify;");
+
+        response.append(lineage);
+
         String more = new String();
         try {
             more = document.select("[id^=moredescr_]").first().ownText();
@@ -53,11 +65,29 @@ public class Genome {
                 .attr("style", "text-align:justify")
                 .attr("id", "content")
                 .appendElement("div")
-                .prepend("<h3 style='color:#985735;'>Abstract</h3>")
                 .appendElement("p")
                 .text(content.ownText() + more);
 
         response.append(content.select("div#content"));
+
+        Elements sequencing = document.select("#ncbigrid-datasorttype-wrapper");
+        for (Element image : sequencing.select("img")) {
+            image.attr("src", BASE + image.attr("src"));
+        }
+
+        for (Element link : sequencing.select("a")) {
+            link.attr("href", BASE + link.attr("href"));
+            link.attr("style", "color: #0000ff; text-decoration: none");
+        }
+
+        sequencing.select("table").attr("style", "border-collapse:collapse;")
+                .prepend("<h4>Genome Sequencing Projects</h4>").select("h4")
+                .attr("style", "color: #985735;");
+
+        sequencing.select("td").attr("style",
+                "border: 1px solid black; font-size: 9pt");
+
+        response.append(sequencing);
 
         return response.toString();
     }
