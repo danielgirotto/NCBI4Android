@@ -2,6 +2,7 @@ package gov.nih.nlm.ncbi;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -46,17 +47,18 @@ public class ContentActivity extends SherlockFragmentActivity {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (!url.contains("pubmed")) {
-                    return false;
+                if (url.contains("pubmed")) {
+                    String id = url.substring(url.indexOf("/"));
+
+                    Intent intent = new Intent(ContentActivity.this,
+                            ContentActivity.class);
+                    intent.putExtra("db", "pubmed");
+                    intent.putExtra("id", id);
+
+                    startActivity(intent);
+                    return true;
                 }
-
-                String id = url.substring(url.indexOf("/"));
-
-                Intent intent = new Intent(ContentActivity.this,
-                        ContentActivity.class);
-                intent.putExtra("db", "pubmed");
-                intent.putExtra("id", id);
-
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
                 return true;
             }
