@@ -70,6 +70,15 @@ public class Genome {
 
         response.append(content.select("div#content"));
 
+        Elements legend = document.select(".rprt-section-body table[border=0]");
+        for (Element link : legend.select("img")) {
+            link.attr("src", BASE + link.attr("src"));
+        }
+        legend.prepend("<h4>Genome Sequencing Projects</h4>").select("h4")
+                .attr("style", "color: #985735;");
+
+        response.append(legend);
+
         Elements sequencing = document.select("#ncbigrid-datasorttype-wrapper");
         for (Element image : sequencing.select("img")) {
             image.attr("src", BASE + image.attr("src"));
@@ -81,11 +90,8 @@ public class Genome {
         }
 
         sequencing.select("table").attr("style", "border-collapse:collapse;")
-                .prepend("<h4>Genome Sequencing Projects</h4>").select("h4")
-                .attr("style", "color: #985735;");
-
-        sequencing.select("td").attr("style",
-                "border: 1px solid black; font-size: 9pt");
+                .select("td")
+                .attr("style", "border: 1px solid black; font-size: 9pt");
 
         response.append(sequencing);
 
