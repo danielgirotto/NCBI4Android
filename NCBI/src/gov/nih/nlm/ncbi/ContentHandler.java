@@ -1,10 +1,11 @@
 package gov.nih.nlm.ncbi;
 
-import java.io.IOException;
-
 import gov.nih.nlm.ncbi.core.EFetch;
 import gov.nih.nlm.ncbi.core.Genome;
 import gov.nih.nlm.ncbi.core.PubMed;
+
+import java.io.IOException;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -69,7 +70,8 @@ public class ContentHandler extends AsyncTask<String, Integer, String> {
 
             @Override
             public void run() {
-                context.getWebView().loadData(result, "text/html", "utf-8");
+                context.getWebView().loadDataWithBaseURL(null, result,
+                        "text/html", "UTF-8", null);
             }
         });
     }
