@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.markupartist.android.widget.PullToRefreshListView;
-
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.markupartist.android.widget.PullToRefreshListView;
 
 public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
 
@@ -31,22 +31,22 @@ public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
         ESearch eSearch = new ESearch();
         ESummary eSummary = new ESummary();
 
+        List<String> idList;
         try {
-            List<String> idList = eSearch.search(db, term, start);
-
-            if (idList == null) {
-                throw new IOException();
-            }
-
-            for (String id : idList) {
-                Summary summary = eSummary.summary(db, id);
-                if (summary != null) {
-                    summaryList.add(summary);
-                }
-            }
+            idList = eSearch.search(db, term, start);
         } catch (IOException e) {
-            Log.d(TAG, "IOException " + e.getMessage());
+            Log.d(TAG, "IOException in ESearch" + e.getMessage());
             return null;
+        }
+
+        for (String id : idList) {
+            Summary summary;
+            try {
+                summary = eSummary.summary(db, id);
+                summaryList.add(summary);
+            } catch (IOException e) {
+                Log.d(TAG, "IOException in ESummary" + e.getMessage());
+            }
         }
         return summaryList;
     }

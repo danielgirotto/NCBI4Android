@@ -41,7 +41,7 @@ public class ESearch {
             }
             count = document.select("Count").first().text();
         } catch (NullPointerException e) {
-            return null;
+            throw new IOException();
         }
         return idList;
     }
