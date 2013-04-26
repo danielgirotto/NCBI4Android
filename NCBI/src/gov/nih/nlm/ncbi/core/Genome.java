@@ -72,59 +72,64 @@ public class Genome {
         /*
          * Chromosomes
          */
-        String chromosomes = new String();
-
         Pattern pattern = Pattern.compile("taxid: [0-9]+");
         Matcher matcher = pattern.matcher(document.toString());
 
-        String taxid = new String();
+        String taxid = null;
         while (matcher.find()) {
             taxid = matcher.group().replaceAll("\\D", "");
             break;
         }
-        chromosomes = new Chromosomes().fetch(taxid);
+
+        String chromosomes = new String();
+        if (taxid != null) {
+            chromosomes = new Chromosomes().fetch(taxid);
+        }
 
         /*
          * Description
          */
-        Element content = document.select(".MainBody").first();
-        content.prependElement("div")
+        Element description = document.select(".MainBody").first();
+        description.prependElement("div")
                 .attr("style", "text-align:justify")
                 .attr("id", "content")
                 .appendElement("div")
                 .appendElement("p")
-                .text(content.ownText() + more)
+                .text(description.ownText() + more)
                 .append("<div>" + chromosomes + "</div>");
-        response.append(content.select("div#content"));
+        response.append(description.select("div#content"));
 
         /*
          * Genome Sequencing Projects
-         * TODO Exception Handling
-         */        
-        Elements legend = document.select(".rprt-section-body table[border=0]");
-        for (Element image : legend.select("img")) {
-            image.attr("src", BASE_URL + image.attr("src"));
-        }
-        legend.prepend("<h4>Genome Sequencing Projects</h4>")
-                .select("h4")
-                .attr("style", "color: #985735;");
-        response.append(legend);
+         */
+        try {
+            Elements legend = document.select("table[border=0]");
+            for (Element image : legend.select("img")) {
+                image.attr("src", BASE_URL + image.attr("src"));
+            }
+            legend.prepend("<h4>Genome Sequencing Projects</h4>")
+                    .select("h4")
+                    .attr("style", "color: #985735;");
+            response.append(legend);
 
-        Elements sequencing = document.select("#ncbigrid-datasorttype-wrapper");
-        for (Element image : sequencing.select("img")) {
-            image.attr("src", BASE_URL + image.attr("src"));
-        }
+            Elements sequencing = document.select("div [id^=ncbigrid]");
+            for (Element image : sequencing.select("img")) {
+                image.attr("src", BASE_URL + image.attr("src"));
+            }
 
-        for (Element link : sequencing.select("a")) {
-            link.attr("href", BASE_URL + link.attr("href"));
-            link.attr("style", "color: #0000ff; text-decoration: none");
-        }
+            for (Element link : sequencing.select("a")) {
+                link.attr("href", BASE_URL + link.attr("href"));
+                link.attr("style", "color: #0000ff; text-decoration: none");
+            }
 
-        sequencing.select("table")
-                .attr("style", "border-collapse:collapse;")
-                .select("td")
-                .attr("style", "border: 1px solid black; font-size: 9pt");
-        response.append(sequencing);
+            sequencing.select("table")
+                    .attr("style", "border-collapse:collapse;")
+                    .select("td")
+                    .attr("style", "border: 1px solid black; font-size: 9pt");
+            response.append(sequencing);
+        } catch (NullPointerException e) {
+            ;
+        }
 
         return response.toString();
     }
