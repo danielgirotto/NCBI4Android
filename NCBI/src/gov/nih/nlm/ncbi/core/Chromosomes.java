@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import android.util.SparseArray;
 
 public class Chromosomes {
 
@@ -18,8 +19,8 @@ public class Chromosomes {
     private static final String BASE_URL = "http://www.ncbi.nlm.nih.gov";
 
     public String fetch(String taxid) throws IOException {
-        String spec = String.format("http://www.ncbi.nlm.nih.gov/projects/"
-                + "ideogram/2.0.3/rasterideo.cgi?taxid=%s", taxid);
+        String spec = String.format("%s/projects/ideogram/2.0.3/rasterideo.cgi"
+                + "?taxid=%s", BASE_URL, taxid);
         Log.d(TAG, spec);
 
         URL url = null;
@@ -49,19 +50,23 @@ public class Chromosomes {
         try {
             JSONObject object = new JSONObject(source);
 
-            /*
-             * TODO sort ideograms JSON: ideograms.chrom.order
-             */
+            SparseArray<String> links = new SparseArray<String>();
+
             JSONArray ideograms = object.getJSONArray("ideograms");
             for (int i = 0; i < ideograms.length(); i++) {
                 JSONObject ideogram = ideograms.getJSONObject(i);
                 JSONObject chrom = ideogram.getJSONObject("chrom");
 
+                Integer order = chrom.getInt("order");
                 String chr = chrom.getString("chrom");
                 String link = String.format("<a href='%s/projects/mapview/maps"
                         + ".cgi?taxid=%s&amp;chr=%s'>%s</a>", BASE_URL, taxid,
                         chr, chr);
-                response.append(link);
+                links.append(order, link);
+            }
+
+            for (int i = 1; i < links.size(); i++) {
+                response.append(links.get(i));
             }
 
             JSONObject image = object.getJSONObject("image");
@@ -72,9 +77,9 @@ public class Chromosomes {
                     image.getString("nc_key"), dimensions.get("height"),
                     dimensions.get("width"));
             response.append(img);
+
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            return "";
         }
         return response.toString();
     }
