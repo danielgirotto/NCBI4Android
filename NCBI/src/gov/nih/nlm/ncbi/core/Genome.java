@@ -81,7 +81,7 @@ public class Genome {
             break;
         }
 
-        String chromosomes = new String();
+        String chromosomes = null;
         if (taxid != null) {
             chromosomes = new Chromosomes().fetch(taxid);
         }
@@ -95,8 +95,15 @@ public class Genome {
                 .attr("id", "content")
                 .appendElement("div")
                 .appendElement("p")
-                .text(description.ownText() + more)
-                .append("<div>" + chromosomes + "</div>");
+                .text(description.ownText() + more);
+
+        if (chromosomes != null) {
+            description.select("div#content")
+                    .append("<h4>Chromosomes</h4>")
+                    .select("h4")
+                    .attr("style", "color: #985735;")
+                    .append("<div>" + chromosomes + "</div>");
+        }
         response.append(description.select("div#content"));
 
         /*

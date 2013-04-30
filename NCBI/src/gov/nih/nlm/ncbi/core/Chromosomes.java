@@ -79,7 +79,7 @@ public class Chromosomes {
             response.append(img);
 
         } catch (JSONException e) {
-            return "";
+            return null;
         }
         return response.toString();
     }
