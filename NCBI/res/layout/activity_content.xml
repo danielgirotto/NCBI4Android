@@ -1,9 +1,7 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:isScrollContainer="true"
-    android:overScrollMode="always"
-    android:scrollbars="vertical" >
+    android:orientation="vertical" >
 
     <WebView
         android:id="@+id/WebViewContent"
@@ -11,4 +9,22 @@
         android:layout_height="wrap_content"
         android:textSize="12sp" />
 
-</ScrollView>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|center_vertical" >
+
+        <ProgressBar
+            android:id="@+id/ProgressBarContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/TextViewContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/load" />
+    </LinearLayout>
+
+</LinearLayout>

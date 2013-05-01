@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -61,6 +62,15 @@ public class ContentActivity extends SherlockFragmentActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                ((View) findViewById(R.id.ProgressBarContent))
+                        .setVisibility(View.GONE);
+                ((View) findViewById(R.id.TextViewContent))
+                        .setVisibility(View.GONE);
             }
         });
 
