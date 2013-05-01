@@ -68,16 +68,6 @@ public class Chromosomes {
             for (int i = 1; i < links.size(); i++) {
                 response.append(links.get(i));
             }
-
-            JSONObject image = object.getJSONObject("image");
-            JSONObject dimensions = image.getJSONObject("dimensions");
-
-            String img = String.format("<img src='%s/projects/sviewer/ncfetch"
-                    + ".cgi?key=%s' height='%s' width='%s'>", BASE_URL,
-                    image.getString("nc_key"), dimensions.get("height"),
-                    dimensions.get("width"));
-            response.append(img);
-
         } catch (JSONException e) {
             return null;
         }
