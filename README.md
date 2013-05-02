@@ -1,20 +1,9 @@
 ## NCBI for Android
 ============
 The [National Center for Biotechnology Information] (http://www.ncbi.nlm.nih.gov/) advances science and health by providing access to biomedical and genomic information.
-
-### Databases
-- PubMed
-- Protein
-- Nucleotide
-- Genome
-
-## Developed By
-============
-
-* Daniel Girotto - <danielcgirotto@gmail.com>
+Databases: PubMed, Protein, Nucleotide and Genome.
 
 ## How to use?
-
 * You should clone git repo, init and update submodules:
 
 ```
@@ -23,9 +12,8 @@ cd NCBI4Android
 git submodule update --init --recursive
 ```
 
-## Download APK
-[NCBI for Android] (https://www.dropbox.com/s/cbzlbyooe3zpz93/MainActivity.apk)
-
+## Download
+https://www.dropbox.com/s/cbzlbyooe3zpz93/MainActivity.apk
 
 License
 =======
