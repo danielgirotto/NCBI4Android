@@ -23,6 +23,10 @@ cd NCBI4Android
 git submodule update --init --recursive
 ```
 
+## Download APK
+[NCBI for Android] (https://www.dropbox.com/s/cbzlbyooe3zpz93/MainActivity.apk)
+
+
 License
 =======
 
