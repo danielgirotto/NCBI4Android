@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings_main"
+        android:id="@+id/action_settings_content"
         android:icon="@drawable/action_settings"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"

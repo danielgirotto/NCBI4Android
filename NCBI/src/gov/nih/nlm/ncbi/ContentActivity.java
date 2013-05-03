@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 
 public class ContentActivity extends SherlockFragmentActivity {
 
@@ -77,6 +79,14 @@ public class ContentActivity extends SherlockFragmentActivity {
         Bundle params = getIntent().getExtras();
         new ContentHandler(this).execute(params.getString("db"),
                 params.getString("id"));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.content, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     public synchronized WebView getWebView() {
