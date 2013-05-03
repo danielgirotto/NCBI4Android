@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,12 +7,10 @@
         android:id="@+id/TextViewList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:fontFamily="arial"
+        android:layout_marginLeft="5dp"
         android:minLines="3"
         android:padding="3dp"
-        android:paddingLeft="7dp"
         android:textIsSelectable="false"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

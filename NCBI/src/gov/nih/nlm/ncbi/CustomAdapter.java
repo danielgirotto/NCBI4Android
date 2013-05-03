@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +43,9 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.listview_item_row, null);
 
-        ((TextView) convertView.findViewById(R.id.TextViewList))
-                .setText(summaryList.get(position).getData());
+        Spanned data = Html.fromHtml(summaryList.get(position).getData());
+        ((TextView) convertView.findViewById(R.id.TextViewList)).setText(data);
+
         return convertView;
     }
 
