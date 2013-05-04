@@ -47,7 +47,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
         Drawable drawable = getResources().getDrawable(R.color.holo_blue_ncbi);
 
-        getSupportActionBar().setLogo(R.drawable.logo_ncbi);
+        getSupportActionBar().setLogo(R.drawable.ic_menu_ncbi);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(drawable);
 

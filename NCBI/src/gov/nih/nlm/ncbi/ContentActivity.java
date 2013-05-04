@@ -31,7 +31,7 @@ public class ContentActivity extends SherlockFragmentActivity {
 
         Drawable drawable = getResources().getDrawable(R.color.holo_blue_ncbi);
 
-        getSupportActionBar().setLogo(R.drawable.logo_ncbi);
+        getSupportActionBar().setLogo(R.drawable.ic_menu_ncbi);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

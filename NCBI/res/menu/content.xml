@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/action_settings_content"
-        android:icon="@drawable/action_settings"
+        android:icon="@drawable/ic_menu_settings"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="@string/menu_settings"/>
