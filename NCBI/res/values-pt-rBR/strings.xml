@@ -3,6 +3,7 @@
 
     <string name="app_name">NCBI</string>
     <string name="menu_settings">Configurações</string>
+    <string name="menu_refresh">Atualizar</string>
     <string name="search">Pesquisa</string>
     <string name="load">Carregando&#8230;</string>
 

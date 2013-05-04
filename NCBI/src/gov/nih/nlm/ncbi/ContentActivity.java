@@ -1,5 +1,7 @@
 package gov.nih.nlm.ncbi;
 
+import org.holoeverywhere.widget.Toast;
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -15,6 +17,7 @@ import android.webkit.WebViewClient;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class ContentActivity extends SherlockFragmentActivity {
 
@@ -87,6 +90,17 @@ public class ContentActivity extends SherlockFragmentActivity {
         inflater.inflate(R.menu.content, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_settings_content:
+            Toast.makeText(this, "conteudo", Toast.LENGTH_SHORT).show();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     public synchronized WebView getWebView() {

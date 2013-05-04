@@ -24,6 +24,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.markupartist.android.widget.PullToRefreshListView;
 import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
 
@@ -86,20 +87,7 @@ public class MainActivity extends SherlockFragmentActivity implements
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            adapter.clear();
-            listView.setAdapter(null);
-            findViewById(R.id.TextViewLoad).setVisibility(View.VISIBLE);
-            findViewById(R.id.ProgressBarLoad).setVisibility(View.VISIBLE);
-
-            Spinner spinner = (Spinner) findViewById(R.id.SpinnerDatabase);
-
-            Locale locale = Locale.getDefault();
-            db = spinner.getSelectedItem().toString().toLowerCase(locale);
-            term = editText.getText().toString();
-
-            new MainHandler(this).execute(db, term, "0");
-            index = 0;
-
+            this.search();
             return true;
         }
         return false;
@@ -122,6 +110,33 @@ public class MainActivity extends SherlockFragmentActivity implements
         inflater.inflate(R.menu.main, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_refresh:
+            this.search();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void search() {
+        adapter.clear();
+        listView.setAdapter(null);
+        findViewById(R.id.TextViewLoad).setVisibility(View.VISIBLE);
+        findViewById(R.id.ProgressBarLoad).setVisibility(View.VISIBLE);
+
+        Spinner spinner = (Spinner) findViewById(R.id.SpinnerDatabase);
+
+        Locale locale = Locale.getDefault();
+        db = spinner.getSelectedItem().toString().toLowerCase(locale);
+        term = editText.getText().toString();
+
+        new MainHandler(this).execute(db, term, "0");
+        index = 0;
     }
 
     public synchronized ListView getListView() {
