@@ -115,7 +115,7 @@ public class MainActivity extends SherlockFragmentActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_refresh:
+        case R.id.action_search:
             this.search();
             return true;
         default:
