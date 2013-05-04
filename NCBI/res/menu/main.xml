@@ -7,10 +7,16 @@
         android:showAsAction="ifRoom"
         android:title="@string/menu_search"/>
     <item
-        android:id="@+id/action_settings_main"
-        android:icon="@drawable/ic_menu_settings"
+        android:id="@+id/action_access_storage"
+        android:icon="@drawable/ic_menu_device_access_storage"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
+        android:title="@string/menu_access_storage"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_menu_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
         android:title="@string/menu_settings"/>
 
 </menu>

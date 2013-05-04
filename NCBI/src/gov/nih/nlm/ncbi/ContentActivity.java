@@ -1,7 +1,5 @@
 package gov.nih.nlm.ncbi;
 
-import org.holoeverywhere.widget.Toast;
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -95,8 +93,7 @@ public class ContentActivity extends SherlockFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_settings_content:
-            Toast.makeText(this, "conteudo", Toast.LENGTH_SHORT).show();
+        case R.id.action_make_available_offline:
             return true;
         default:
             return super.onOptionsItemSelected(item);

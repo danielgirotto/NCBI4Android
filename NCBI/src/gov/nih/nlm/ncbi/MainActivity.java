@@ -118,6 +118,8 @@ public class MainActivity extends SherlockFragmentActivity implements
         case R.id.action_search:
             this.search();
             return true;
+        case R.id.action_access_storage:
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
