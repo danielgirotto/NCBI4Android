@@ -1,16 +1,16 @@
 package gov.nih.nlm.ncbi.model;
 
-public class Summary {
+public class Content {
 
     private Long id = null;
     private String data = null;
 
-    public Summary(Long id, String data) {
+    public Content(Long id, String data) {
         this.id = id;
         this.data = data;
     }
 
-    public Summary() {
+    public Content() {
 
     }
 

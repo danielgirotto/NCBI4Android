@@ -2,7 +2,9 @@ package gov.nih.nlm.ncbi;
 
 import gov.nih.nlm.ncbi.core.ESearch;
 import gov.nih.nlm.ncbi.core.ESummary;
+import gov.nih.nlm.ncbi.model.Contract;
 import gov.nih.nlm.ncbi.model.Summary;
+import gov.nih.nlm.ncbi.model.SummaryManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,17 +37,24 @@ public class MainHandler extends AsyncTask<String, Integer, List<Summary>> {
         try {
             idList = eSearch.search(db, term, start);
         } catch (IOException e) {
-            Log.d(TAG, "IOException in ESearch" + e.getMessage());
+            Log.d(TAG, "IOException in ESearch " + e.getMessage());
             return null;
         }
 
+        SummaryManager manager = new SummaryManager(context);
         for (String id : idList) {
-            Summary summary;
+            Summary summary = manager.select(Contract.Summary._ID + " = " + id);
+            if (summary != null) {
+                summaryList.add(summary);
+                continue;
+            }
+
             try {
                 summary = eSummary.summary(db, id);
                 summaryList.add(summary);
+                manager.insertOrUpdate(summary, 0);
             } catch (IOException e) {
-                Log.d(TAG, "IOException in ESummary" + e.getMessage());
+                Log.d(TAG, "IOException in ESummary " + e.getMessage());
             }
         }
         return summaryList;

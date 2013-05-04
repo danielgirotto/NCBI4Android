@@ -1,5 +1,8 @@
 package gov.nih.nlm.ncbi;
 
+import gov.nih.nlm.ncbi.model.Contract;
+import gov.nih.nlm.ncbi.model.Summary;
+import gov.nih.nlm.ncbi.model.SummaryManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,6 +22,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ContentActivity extends SherlockFragmentActivity {
 
+    private String id = null;
     private Handler handler = null;
     private WebView webView = null;
 
@@ -78,8 +82,8 @@ public class ContentActivity extends SherlockFragmentActivity {
         });
 
         Bundle params = getIntent().getExtras();
-        new ContentHandler(this).execute(params.getString("db"),
-                params.getString("id"));
+        this.id = params.getString("id");
+        new ContentHandler(this).execute(params.getString("db"), this.id);
     }
 
     @Override
@@ -94,6 +98,10 @@ public class ContentActivity extends SherlockFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_make_available_offline:
+            SummaryManager manager = new SummaryManager(this);
+            Summary summary = manager.select(Contract.Summary._ID + " = " + id);
+
+            manager.insertOrUpdate(summary, 1);
             return true;
         default:
             return super.onOptionsItemSelected(item);

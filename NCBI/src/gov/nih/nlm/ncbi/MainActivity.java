@@ -1,5 +1,7 @@
 package gov.nih.nlm.ncbi;
 
+import gov.nih.nlm.ncbi.model.SummaryManager;
+
 import java.util.Locale;
 
 import org.holoeverywhere.widget.Spinner;
@@ -119,6 +121,14 @@ public class MainActivity extends SherlockFragmentActivity implements
             this.search();
             return true;
         case R.id.action_access_storage:
+            SummaryManager manager = new SummaryManager(this);
+
+            adapter.clear();
+            listView.setAdapter(null);
+            adapter.add(manager.selectAll());
+            listView.setAdapter(adapter);
+
+            ((PullToRefreshListView) listView).onRefreshComplete();
             return true;
         default:
             return super.onOptionsItemSelected(item);
