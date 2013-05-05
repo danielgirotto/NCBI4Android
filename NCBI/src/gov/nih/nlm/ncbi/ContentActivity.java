@@ -56,7 +56,7 @@ public class ContentActivity extends SherlockFragmentActivity {
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("pubmed")) {
-                    String id = url.substring(url.indexOf("/"));
+                    String id = url.substring(url.indexOf("/") + 1);
 
                     Intent intent = new Intent(ContentActivity.this,
                             ContentActivity.class);
