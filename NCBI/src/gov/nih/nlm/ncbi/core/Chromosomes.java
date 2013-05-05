@@ -5,13 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
-import android.util.SparseArray;
 
 public class Chromosomes {
 
@@ -45,12 +48,13 @@ public class Chromosomes {
         return parse(response.toString(), taxid);
     }
 
+    @SuppressLint("UseSparseArrays")
     private String parse(String source, String taxid) {
         StringBuilder response = new StringBuilder();
         try {
             JSONObject object = new JSONObject(source);
 
-            SparseArray<String> links = new SparseArray<String>();
+            TreeMap<Integer, String> map = new TreeMap<Integer, String>();
 
             JSONArray ideograms = object.getJSONArray("ideograms");
             for (int i = 0; i < ideograms.length(); i++) {
@@ -62,11 +66,12 @@ public class Chromosomes {
                 String link = String.format("<a href='%s/projects/mapview/maps"
                         + ".cgi?taxid=%s&amp;chr=%s'>%s</a>", BASE_URL, taxid,
                         chr, chr);
-                links.append(order, link);
+                map.put(order, link);
             }
 
-            for (int i = 1; i < links.size(); i++) {
-                response.append(links.get(i));
+            SortedSet<Integer> keys = new TreeSet<Integer>(map.keySet());
+            for (Integer key : keys) {
+                response.append(map.get(key));
             }
         } catch (JSONException e) {
             return null;
