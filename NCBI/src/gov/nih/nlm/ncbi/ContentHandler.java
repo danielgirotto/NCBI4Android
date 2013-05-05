@@ -1,11 +1,14 @@
 package gov.nih.nlm.ncbi;
 
 import gov.nih.nlm.ncbi.core.EFetch;
+import gov.nih.nlm.ncbi.core.ESummary;
 import gov.nih.nlm.ncbi.core.Genome;
 import gov.nih.nlm.ncbi.core.PubMed;
 import gov.nih.nlm.ncbi.model.Content;
 import gov.nih.nlm.ncbi.model.ContentManager;
 import gov.nih.nlm.ncbi.model.Contract;
+import gov.nih.nlm.ncbi.model.Summary;
+import gov.nih.nlm.ncbi.model.SummaryManager;
 
 import java.io.IOException;
 
@@ -25,6 +28,18 @@ public class ContentHandler extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         String db = params[0], id = params[1];
+
+        SummaryManager smanager = new SummaryManager(context);
+        Summary summary = smanager.select(Contract.Summary._ID + " = " + id);
+        if (summary == null) {
+            try {
+                ESummary eSummary = new ESummary();
+                summary = eSummary.summary("pubmed", id);
+                smanager.insertOrUpdate(summary, 0);
+            } catch (IOException e) {
+                return null;
+            }
+        }
 
         String result = null;
         ContentManager manager = new ContentManager(context);
