@@ -3,6 +3,12 @@ package gov.nih.nlm.ncbi;
 import gov.nih.nlm.ncbi.model.Contract;
 import gov.nih.nlm.ncbi.model.Summary;
 import gov.nih.nlm.ncbi.model.SummaryManager;
+
+import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.widget.Toast;
+
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -54,30 +60,44 @@ public class ContentActivity extends SherlockFragmentActivity {
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClient() {
+            Intent intent = null;
+            Context context = ContentActivity.this;
+
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("pubmed")) {
                     String id = url.substring(url.indexOf("/") + 1);
 
-                    Intent intent = new Intent(ContentActivity.this,
-                            ContentActivity.class);
+                    Intent intent = new Intent(context, ContentActivity.class);
                     intent.putExtra("db", "pubmed");
                     intent.putExtra("id", id);
 
                     startActivity(intent);
                     return true;
                 }
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+                this.intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(R.string.browser_redirect);
+                builder.setNegativeButton(R.string.cancel, null);
+
+                builder.setPositiveButton(R.string.ok, new DialogInterface
+                        .OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(intent);
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
                 return true;
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                ((View) findViewById(R.id.ProgressBarContent))
-                        .setVisibility(View.GONE);
-                ((View) findViewById(R.id.TextViewContent))
-                        .setVisibility(View.GONE);
+                findViewById(R.id.TextViewContent).setVisibility(View.GONE);
+                findViewById(R.id.ProgressBarContent).setVisibility(View.GONE);
             }
         });
 
@@ -100,8 +120,10 @@ public class ContentActivity extends SherlockFragmentActivity {
         case R.id.action_make_available_offline:
             SummaryManager manager = new SummaryManager(this);
             Summary summary = manager.select(Contract.Summary._ID + " = " + id);
-
             manager.insertOrUpdate(summary, 1);
+
+            String str = getString(R.string.available_offline);
+            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
             return true;
         default:
             return super.onOptionsItemSelected(item);

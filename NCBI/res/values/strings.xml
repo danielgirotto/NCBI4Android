@@ -8,6 +8,12 @@
     <string name="make_available_offline">Make available offline</string>
     <string name="search">Search</string>
     <string name="load">Loading&#8230;</string>
+    <string name="spell">Did you mean: </string>
+    <string name="count">Results: </string>
+    <string name="available_offline">Article saved</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="browser_redirect">You\'ll be redirected to your default browser!</string>
 
     <string-array name="databases">
         <item>PubMed</item>
