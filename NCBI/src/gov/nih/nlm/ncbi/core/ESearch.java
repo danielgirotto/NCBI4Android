@@ -1,6 +1,7 @@
 package gov.nih.nlm.ncbi.core;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ESearch {
     {
         String url = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
                 + "eutils/esearch.fcgi?db=%s&term=%s&retstart=%s&retmax=%s",
-                db, term, start, 5);
+                db, URLEncoder.encode(term, "UTF-8"), start, 5);
         Log.d(TAG, url);
 
         Document document = Jsoup.connect(url)
