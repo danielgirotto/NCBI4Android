@@ -10,7 +10,7 @@
     <string name="load">Carregando&#8230;</string>
     <string name="spell">Você quis dizer: </string>
     <string name="count">Resultados: </string>
-    <string name="available_offline">Article saved</string>
+    <string name="available_offline">Artigo salvo</string>
     <string name="ok">Aceitar</string>
     <string name="cancel">Cancelar</string>
     <string name="browser_redirect">Você será redirecionado para o seu navegador padrão!</string>
