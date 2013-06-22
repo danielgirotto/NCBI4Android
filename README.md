@@ -13,7 +13,7 @@ git submodule update --init --recursive
 ```
 
 ## Download
-https://www.dropbox.com/s/cbzlbyooe3zpz93/MainActivity.apk
+http://goo.gl/k6EM2
 
 License
 =======
