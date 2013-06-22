@@ -25,7 +25,7 @@ public class ESearch {
     {
         String url = String.format("http://eutils.ncbi.nlm.nih.gov/entrez/"
                 + "eutils/esearch.fcgi?db=%s&term=%s&retstart=%s&retmax=%s",
-                db, URLEncoder.encode(term, "UTF-8"), start, 5);
+                db, URLEncoder.encode(term, "UTF-8"), start, 20);
         Log.d(TAG, url);
 
         Document document = Jsoup.connect(url)
