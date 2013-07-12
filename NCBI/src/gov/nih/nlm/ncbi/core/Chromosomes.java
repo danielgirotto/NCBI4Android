@@ -22,8 +22,10 @@ public class Chromosomes {
     private static final String BASE_URL = "http://www.ncbi.nlm.nih.gov";
 
     public String fetch(String taxid) throws IOException {
-        String spec = String.format("%s/projects/ideogram/2.0.3/rasterideo.cgi"
-                + "?taxid=%s", BASE_URL, taxid);
+        String spec = String.format("%s/projects/ideogram/3.0/getideo.cgi?taxid"
+                + "=%s&align=top&font=2|12&ideowidth=8&ideoheight=50&numrows=1&"
+                + "numcols=1&mode=vertical&chl=before|10|#202020|1&pseudo=off",
+                BASE_URL, taxid);
         Log.d(TAG, spec);
 
         URL url = null;
@@ -64,8 +66,8 @@ public class Chromosomes {
                 Integer order = chrom.getInt("order");
                 String chr = chrom.getString("chrom");
                 String link = String.format("<a href='%s/projects/mapview/maps"
-                        + ".cgi?taxid=%s&amp;chr=%s'>%s</a>", BASE_URL, taxid,
-                        chr, chr);
+                        + ".cgi?taxid=%s&amp;chr=%s' style='font-size:7pt;'>%s"
+                        + "</a>", BASE_URL, taxid, chr, chr);
                 map.put(order, link);
             }
 
@@ -73,6 +75,11 @@ public class Chromosomes {
             for (Integer key : keys) {
                 response.append(map.get(key));
             }
+
+            String nc_key = object.getJSONObject("image").getString("nc_key");
+            String image = String.format("<img src='%s/projects/sviewer/ncfetch"
+                    + ".cgi?key=%s'>", BASE_URL, nc_key);
+            response.append(image);
         } catch (JSONException e) {
             return null;
         }
