@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">NCBI</string>
-    <string name="menu_settings">Settings</string>
     <string name="menu_search">Search</string>
     <string name="menu_access_storage">Storaged</string>
     <string name="make_available_offline">Make available offline</string>
