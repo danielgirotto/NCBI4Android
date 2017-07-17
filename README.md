@@ -12,9 +12,6 @@ cd NCBI4Android
 git submodule update --init --recursive
 ```
 
-## Download
-http://goo.gl/k6EM2
-
 License
 =======
 
